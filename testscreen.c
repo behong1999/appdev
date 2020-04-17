@@ -3,17 +3,18 @@
 #include <stdio.h>
 #include "screen.h"
 #include "comm.h"
+#include "sound.h"
 
 int main(void){
+/*
 	Position cur = getscreensize();
 	char postdata[100];
 	sprintf(postdata, "row=%d&col=%d&id=e1900318", cur.row, cur.col);
 	sendpost(URL, postdata);
-	gotoXY(1,1);
 	printf("Screen size: row = %d, col = %d\n",cur.row,cur.col);
 	printf("Today we will make some animations. Press any key to continue\n");
 	getchar(); //Wait for the user to press any key
-	getchar();
+*/
 	int ff,bb;
 	for(int i=0;i<=25;i++){
 		ff = (i+1)%8+30;
@@ -39,11 +40,14 @@ int main(void){
         printf("HELLO\n");
     	usleep(250000);//delay
     }
-
 	resetcolors();
 	clearscreen();
+	gotoXY(1,1);
+    FILE *fp = fopen("test.wav","r"); //open the wav file in read-only mode
+    WAVheader h = readwavhdr(fp);
+    fclose(fp);
+    displaywavhdr(h);
 	printf("Color is set back to default\n");
-	getchar();
 /*
 	clearscreen();
 	setfgcolor(MAGENTA);
