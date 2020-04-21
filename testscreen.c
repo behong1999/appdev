@@ -40,14 +40,15 @@ int main(void){
         printf("HELLO\n");
     	usleep(250000);//delay
     }
+
 	resetcolors();
 	clearscreen();
 	gotoXY(1,1);
+	printf("Color is set back to default\n");
     FILE *fp = fopen("test.wav","r"); //open the wav file in read-only mode
     WAVheader h = readwavhdr(fp);
     fclose(fp);
     displaywavhdr(h);
-	printf("Color is set back to default\n");
 /*
 	clearscreen();
 	setfgcolor(MAGENTA);
