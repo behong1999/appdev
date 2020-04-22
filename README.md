@@ -38,7 +38,7 @@ Lists Of Contents
 	screen.c 		contains screen manipulation functions.
 	screen.h 		contains constant definitions and function declarations 
 					of screen.c.
-	testscreen.c 	contains the calls of functions included in screen.c 
+	testscreen.c	contains the calls of functions included in screen.c 
 				 	and displays the result on the terminal.
 	comm.c			contains data transfer functions.
 	comm.h 			contains constant definitions and function declarations 
