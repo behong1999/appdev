@@ -2,20 +2,18 @@
 #include <i386-linux-gnu/curl/curl.h>
 #include "comm.h"
 
-/*If we are interested in
-1) number of peaks in a piece of wav file
-2) maximum decibel value of this wav file then our post string
-looks like "peak=2&max=78.9"
-The url could be "http://www.cc.puv.fi/~e1900318/php/sound.php"*/
-
 void sendpost(char *url, char *post){
 	CURL *curl;
-
-	CURLcode res;
 	
+	CURLcode res;
+	//This function must be called at least once within a program
 	curl_global_init(CURL_GLOBAL_ALL);
-
+	
+	//This function must be the first function to call, 
+	//and it returns a CURL easy handle that you must use 
+	//as input to other functions in the easy interface.
 	curl = curl_easy_init();
+	
 	if(curl){
 		curl_easy_setopt(curl,CURLOPT_URL,url);
 		curl_easy_setopt(curl,CURLOPT_POSTFIELDS,post);
@@ -24,6 +22,7 @@ void sendpost(char *url, char *post){
 			fprintf(stderr, "curl_easy_perform() failed: %s\n",
 							curl_easy_strerror(res));
 		}
+		//This function must be called when the operation is completed
 		curl_easy_cleanup(curl);
 	}
 	curl_global_cleanup();

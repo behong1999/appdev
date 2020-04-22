@@ -6,6 +6,7 @@ Read at this link: http://www.termsys.demon.co.uk/vtansi.htm
 	
 #include <stdio.h>
 #include "screen.h"
+//Function definitions
 void setfgcolor(int fg){
 	printf("%c[1;%dm",0x1B,fg);
 }
@@ -68,7 +69,7 @@ Position getscreensize(void){
 	printf("%c[6n",ESC);	//send the query string for  cursor position
 	scanf("%s",re);			//get report from the terminal
 #ifdef DEBUG
-	printf("%s\n",re);
+	printf("%s",re);	
 #endif
 	//We will decode the returned string
 #include <string.h>

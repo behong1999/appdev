@@ -8,7 +8,7 @@
 #define UNICODE
 #define HEART "\u2665"
 #define BAR "\u2590"
-#define DEBUG //for conditional compilation
+//#define DEBUG //for conditional compilation
 
 //#define BLACK 30, instead of using that, it's better to use enumeration
 enum FG{BLACK=30, RED=31, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE};

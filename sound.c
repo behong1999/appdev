@@ -2,6 +2,8 @@
 #include <math.h>
 #include "sound.h"
 #include "screen.h"
+#include "comm.h"
+
 //function definitions
 WAVheader readwavhdr(FILE *fp){
 	WAVheader myh;
@@ -27,6 +29,8 @@ void wavdata(WAVheader h, FILE *fp){
 	// a "Fast" decibel value. A decibel value is always calculated by RMS
 	// (ROOT MEAN SQUARE) formula 
 	short samples[SIZE];
+	char postData[100];
+	double max = 0;
 	int peaks = 0, check = 0;
 	for(int i=0; i<BARS; i++){ // to read 5-sec wav file, we have 40 data
 		fread(samples,sizeof(samples),1,fp);
@@ -36,10 +40,16 @@ void wavdata(WAVheader h, FILE *fp){
 		}
 		//double dB = sqrt(sum/2000);
 		double dB = 20*log10(sqrt(sum/SIZE));
+		
 #ifdef SDEBUG
 	printf("dB[%d] = %f\n", i, dB);
 #else 
-	if(dB > 70)	{
+	if(dB>70){
+		//check maximum dB value
+		if(dB > max){
+			max = dB;
+		}
+		//check peak
 		setfgcolor(RED);
 		if(check == 0)
 			peaks++; check = 1;
@@ -56,7 +66,10 @@ void wavdata(WAVheader h, FILE *fp){
 	printf("Duration: %.2f\n", (double)h.subchunk2Size/h.byteRate);
 	gotoXY(1,150);
 	setfgcolor(YELLOW);
-	printf("Peaks: %d\n",7);
+	printf("Peaks: %d\n",peaks);
 #endif
 	}
+	//String formatted and send data to a PHP file via URL to store data
+	sprintf(postData, "peaks=%d&max=%.2f\n", peaks, max);
+	sendpost(URL,postData); 
 }
